@@ -32,3 +32,6 @@ class Customer:
         self.CustomerName = customer_name
         self.Address = address
         self.Phone = phone
+
+
+if __n

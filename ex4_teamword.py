@@ -71,3 +71,7 @@ class Customers(BaseModel):
 
     class Meta:
         table_name = 'Customers'
+        
+        
+if __name__ == "__main__":
+    
