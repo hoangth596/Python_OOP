@@ -4,6 +4,33 @@ from csv import DictWriter, writer
 import Ex02 as data
 
 
+def verify_input(command, type):
+    con = False
+    while con == False:
+        try:
+            var = type(input(command))
+            con = True
+
+        except ValueError:
+            con = False
+
+    return var
+
+
+def verify_date_input(command):
+    con = False
+    while con == False:
+        try:
+            date_str = input(f'Enter the {command} date (DD-MM-YY): ')
+            date = datetime.strptime(date_str, '%d-%m-%y').date()
+            con = True
+
+        except ValueError:
+            con = False
+
+    return date
+
+
 def save_info(table_name, class_var):
     try:
         os.makedirs('Database Exercise 03')
@@ -39,13 +66,7 @@ def input_data():
             contact = input('Enter the customer contact name: ')
             address = input('Enter the customer address: ')
             city = input('Enter the customer city: ')
-            con = False
-            while con == False:
-                try:
-                    postal_code = int(input('Enter the city postal code: '))
-                    con = True
-                except ValueError:
-                    con = False
+            postal_code = verify_input('Enter the city postal code: ', int)
             country = input('Enter the customer country: ')
             cus = data.Customers(name, contact, address, city, postal_code, country)
             save_info(table, cus)
@@ -53,15 +74,7 @@ def input_data():
         elif table == 'Employees':
             last_name = input('Enter the employee last name: ')
             first_name = input('Enter the employee first name: ')
-            con = False
-            while con == False:
-                birth_date_str = input('Enter the employee birth date (DD-MM-YY): ')
-                try:
-                    birth_date = datetime.strptime(birth_date_str, '%d-%m-%y').date()
-                    con = True
-                except ValueError:
-                    con = False
-                                        
+            birth_date = verify_date_input('employee birth')
             photo = input('Enter the file name of employee photo: ')
             notes = input('Enter notes for employee: ')
             emp = data.Employees(last_name, first_name, birth_date, photo, notes)
@@ -84,41 +97,38 @@ def input_data():
             contact = input('Enter the supplier contact name: ')
             address = input('Enter the supplier address: ')
             city = input('Enter the supplier city: ')
-            postal_code = input('Enter the city postal code: ').astype(int)
+            postal_code = verify_input('Enter the city postal code: ', int)
             country = input('Enter the supplier country: ')
             phone = input('Enter the supplier phone number: ')
             sup = data.Suppliers(sup_name, contact, address, city, postal_code, country, phone)
             save_info(table, sup)
 
         elif table == 'Orders':
-            cus_id = input('Enter customer ID: ').astype(int)
-            emp_id = input('Enter employee ID: ').astype(int)
-            order_date = input('Enter order date (DD-MM-YYYY): ')
-            
-            shipper_id = int(input('Enter shipper ID: '))
+            cus_id = verify_input('Enter customer ID: ', int)
+            emp_id = verify_input('Enter employee ID: ', int)
+            order_date = verify_date_input('order')
+            shipper_id = verify_input('Enter shipper ID: ', int)
             order = data.Orders(cus_id, emp_id, order_date, shipper_id)
             save_info(table, order)
 
         elif table == 'Products':
             prod_name = input('Enter product name: ')
-            sup_id = int(input('Enter the supplier ID: '))
-            cat_id = int(input('Enter the category ID: '))
+            sup_id = verify_input('Enter the supplier ID: ', int)
+            cat_id = verify_input('Enter the category ID: ', int)
             unit = input('Enter the product unit: ')
-            price = float(input('Enter the product price: '))
+            price = verify_input('Enter the product price: ', float)
             product = data.Products(prod_name, sup_id, cat_id, unit, price)
             save_info(table, product)
 
         elif table == 'Orderdetails':
-            order_id = int(input('Enter the order ID: '))
-            prod_id = int(input('Enter the product ID: '))
-            quantity = int(input('Enter the order quantity:'))
+            order_id = verify_input('Enter the order ID: ', int)
+            prod_id = verify_input('Enter the product ID: ', int)
+            quantity = verify_input('Enter the order quantity:', int)
             ord_detail = data.OrderDetails(order_id, prod_id, quantity)
             save_info('OrderDetails', ord_detail)
 
         elif table.lower() == 'done':
-    
-            return False
+            exit()
         
-
-
+        
 input_data()
