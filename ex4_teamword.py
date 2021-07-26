@@ -3,9 +3,11 @@ from peewee import *
 
 db = pw.SqliteDatabase('CarDealship.db')
 
+
 class BaseModel(Model):
     class Meta:
-        database = db 
+        database = db
+
 
 class SalePersons(BaseModel):
     sale_id = AutoField(primary_key=True)
@@ -14,6 +16,7 @@ class SalePersons(BaseModel):
 
     class Meta:
         table_name = 'SalePersons'
+
 
 class Parts(BaseModel):
     part_id = AutoField(primary_key=True)
@@ -25,16 +28,18 @@ class Parts(BaseModel):
     class Meta:
         table_name = 'Parts'
 
+
 class SalesInvoices(BaseModel):
     invoiceID = AutoField(primary_key=True)
     invoice_name = CharField()
     date = DateField()
-    car_id =  ForeignKeyField(Cars, column_name='car_id')
-    cus_id =  ForeignKeyField(Customers, column_name='cus_id')
+    car_id = ForeignKeyField(Cars, column_name='car_id')
+    cus_id = ForeignKeyField(Customers, column_name='cus_id')
     saleperson_id = ForeignKeyField(SalePersons, column_name='sale_id')
 
     class Meta:
         table_name = 'SalesInvoices'
+
 
 class Cars(BaseModel):
     car_id = AutoField(primary_key=True)
@@ -47,15 +52,18 @@ class Cars(BaseModel):
     class Meta:
         table_name = 'Cars'
 
+
 class PartsUsed(BaseModel):
-    part_used_id =  AutoField(primary_key=True)
-    service_mechanic_id = ForeignKeyField(ServiceMechanic, column_name='service_mechanic_id')
+    part_used_id = AutoField(primary_key=True)
+    service_mechanic_id = ForeignKeyField(
+        ServiceMechanic, column_name='service_mechanic_id')
     part_id = ForeignKeyField(Parts, column_name='part_id')
     number_used = IntegerField()
     price = FloatField()
 
     class Meta:
         table_name = 'PartsUsed'
+
 
 class Customers(BaseModel):
     cus_id = AutoField(primary_key=True)
@@ -71,3 +79,50 @@ class Customers(BaseModel):
 
     class Meta:
         table_name = 'Customers'
+
+
+class ServiceTickets(BaseModel):
+    service_ticket_id = AutoField(primary_key=True)
+    car_serial_number = ForeignKeyField(Cars, column_name='car_series_number')
+    customer_id = ForeignKeyField(Customers, column_name='cus_id')
+    date_recieved = DateField()
+    comments = CharField()
+    date_return = DateField()
+
+    class Meta:
+        table_name = "ServiceTickets"
+
+
+class ServiceMechanics(BaseModel):
+
+    service_mechanic_id = AutoField(primary_key=True)
+    service_ticket_id = ForeignKeyField(
+        ServiceTickets, column_name='service_ticket_id')
+    service_id = ForeignKeyField(Services, column_name='service_id')
+    mechanic_id = ForeignKeyField(Mechanics, column_name='mechanic_id')
+    hour = IntegerField()
+    comment = CharField()
+    rate = IntegerField
+
+    class Meta:
+        table_name = "ServiceMechanics"
+
+
+class Services(BaseModel):
+
+    service_id = AutoField(primary_key=True)
+    service_name = CharField()
+    hourly_rate = FloatField()
+
+    class Meta:
+        table_name = "Services"
+
+
+class Mechanics(BaseModel):
+
+    mechanic_id = AutoField(primary_key=True)
+    last_name = CharField()
+    first_name = CharField()
+
+    class Meta:
+        table_name = "Mechanics"
