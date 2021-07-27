@@ -41,15 +41,14 @@ class Table(metaclass = Singleton):
         df_file = pd.DataFrame(self.df_file)
         df_file.to_csv(f'{filename}.csv')
         return
+
         
-
-
-
 class CategoriesTable(Table):
     def add(self, name, des):
         obj = Categories(name, des)
         id = obj.get_id()
-        self.table[id] = obj 
+        self.table[id] = obj
+
 
 class SuppliersTable(Table):
     def add(self, name, contact_name, address, city, postcode, country):
@@ -64,11 +63,13 @@ class ShippersTable(Table):
         id = obj.get_id()
         self.table[id] = obj  
 
+
 class EmployeesTable(Table):
-    def add(self,lname, fname, birth, photo, notes):
+    def add(self, lname, fname, birth, photo, notes):
         obj = Employees(lname, fname, birth, photo, notes)
         id = obj.get_id()
         self.table[id] = obj  
+
 
 class CustomersTable(Table):
     def add(self,name, contact_name, address, city, postcode, country):
@@ -76,28 +77,30 @@ class CustomersTable(Table):
         id = obj.get_id()
         self.table[id] = obj  
 
+
 class ProductsTable(Table):
-    def add(self, name, unit, price, catID, supID):
-        obj = Products(name, unit, price, catID, supID)
+    def add(self, name, supID, catID, unit, price):
+        obj = Products(name, supID, catID, unit, price)
         id = obj.get_id()
         self.table[id] = obj  
 
 
-class OrderTable(Table):
-    def add(self,cusID, empID, shipID, order_date):
-        obj = Order(cusID, empID, shipID, order_date)
+class OrdersTable(Table):
+    def add(self,cusID, empID, order_date, shipID):
+        obj = Orders(cusID, empID, order_date, shipID)
         id = obj.get_id()
         self.table[id] = obj  
 
-class OrderDetailTable(Table):
+
+class OrderDetailsTable(Table):
     def add(self,orderID, proID, quantity):
-        obj = OrderDetail(orderID, proID, quantity)
+        obj = OrderDetails(orderID, proID, quantity)
         id = obj.get_id()
         self.table[id] = obj  
 
 
 # run  + test
-
+"""
 c = CategoriesTable()
 c.add('quan ao', 'good')
 c.add('giay dep','good')
@@ -122,3 +125,4 @@ e.read()
 
 c.save('categorial')
 d.save('supplier')
+"""
