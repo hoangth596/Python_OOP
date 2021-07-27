@@ -1,5 +1,3 @@
-
-import datetime
 import os
 import pandas as pd
 
@@ -24,7 +22,7 @@ class Categories: # thu tu tao obj 1
     
     @classmethod
     def get_index(cls,table_name):
-        file_path = '/content/' + table_name + '.csv'
+        file_path = table_name + '.csv'
         if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
             cls.__index  = len(pd.read_csv(file_path)) + 1
             cls.check = True 
@@ -236,6 +234,7 @@ class Customers: # # thu tu tao obj 5
     def get_id(self):
         return self.__cusID
 
+
 class Products: # thu tu tao obj 6
     """
     This class contains ProductID, SupplierID, CatergoryID,
@@ -273,6 +272,7 @@ class Products: # thu tu tao obj 6
 
     def __str__(self):
         return f'Products : {self.get_id()}, {self.pro_name}, {self.pro_supID}, {self.pro_catID}, {self.pro_unit}, {self.pro_price}' 
+
 
 class Orders: # thu tu tao obj 7
     """
@@ -339,11 +339,10 @@ class OrderDetails: # thu tu tao obj
 
         return cls.__index
 
-   
-
         
     def get_id(self):
         return self.__ord_detail_ID
+
 
 a1 = Categories('car','4 banh')
 a2 = Suppliers('AWS','USA','My','NY',10000,'Queen street')

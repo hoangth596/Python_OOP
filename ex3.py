@@ -2,6 +2,33 @@ from ex2 import *
 import pandas as pd 
 
 
+def verify_input(command, type):
+    con = False
+    while con == False:
+        try:
+            var = type(input(command))
+            con = True
+
+        except ValueError:
+            con = False
+
+    return var
+
+
+def verify_date_input(command):
+    con = False
+    while con == False:
+        try:
+            date_str = input(f'Enter the {command} date (DD-MM-YY): ')
+            date = datetime.datetime.strptime(date_str, '%d-%m-%y').date()
+            con = True
+
+        except ValueError:
+            con = False
+
+    return date
+
+
 class Singleton(type): # su dung lai lop da khoi tao
     _instances = {}
     def __call__(cls, *args, **kwargs):
@@ -209,7 +236,7 @@ class Application:
                 emp_id = verify_input('Enter employee ID: ', int)
                 order_date = verify_date_input('order')
                 shipper_id = verify_input('Enter shipper ID: ', int)
-                t6 = OrderTable()
+                t6 = OrdersTable()
                 t6.add(cus_id, emp_id, order_date, shipper_id)
                 q2 = input('Save file Y/N')
                 if q2 == 'Y':
@@ -235,16 +262,17 @@ class Application:
                 order_id = verify_input('Enter the order ID: ', int)
                 prod_id = verify_input('Enter the product ID: ', int)
                 quantity = verify_input('Enter the order quantity:', int)
-                t8 = OrderDetailTable()
+                t8 = OrderDetailsTable()
                 t8.add(order_id, prod_id, quantity)
                 q2 = input('Save file Y/N')
                 if q2 == 'Y':
-                    t8.save('Orderdetails')
+                    t8.save('OrderDetails')
                 else:
                     continue
 
             elif table.lower() == 'done':
                 exit()
+
 
 test = Application()
 test.input_data()
