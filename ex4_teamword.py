@@ -1,5 +1,5 @@
-# !pip install peewee
 from peewee import *
+
 
 db = SqliteDatabase('CarDealship.db')
 
@@ -40,7 +40,6 @@ class Cars(BaseModel):
     class Meta:
         table_name = 'Cars'
 
-
 class Customers(BaseModel):
     cus_id = AutoField(primary_key=True)
     lname = CharField()
@@ -56,7 +55,7 @@ class Customers(BaseModel):
     class Meta:
         table_name = 'Customers'
 
-    
+
 class SalesInvoices(BaseModel):
     invoiceID = AutoField(primary_key=True)
     invoice_name = CharField()
@@ -67,7 +66,6 @@ class SalesInvoices(BaseModel):
 
     class Meta:
         table_name = 'SalesInvoices'
-
 
 class ServiceTickets(BaseModel):
     service_ticket_id = AutoField(primary_key=True)
@@ -80,7 +78,6 @@ class ServiceTickets(BaseModel):
     class Meta:
         table_name = "ServiceTickets"
 
-
 class Services(BaseModel):
 
     service_id = AutoField(primary_key=True)
@@ -89,7 +86,6 @@ class Services(BaseModel):
 
     class Meta:
         table_name = "Services"
-
 
 class Mechanics(BaseModel):
 
@@ -100,7 +96,6 @@ class Mechanics(BaseModel):
     class Meta:
         table_name = "Mechanics"
 
-
 class ServiceMechanics(BaseModel):
 
     service_mechanic_id = AutoField(primary_key=True)
@@ -109,11 +104,10 @@ class ServiceMechanics(BaseModel):
     mechanic_id = ForeignKeyField(Mechanics, column_name='mechanic_id')
     hour = IntegerField()
     comment = CharField()
-    rate = IntegerField
+    rate = IntegerField()
 
     class Meta:
         table_name = "ServiceMechanics"
-
 
 class PartsUsed(BaseModel):
     part_used_id = AutoField(primary_key=True)
@@ -124,3 +118,14 @@ class PartsUsed(BaseModel):
 
     class Meta:
         table_name = 'PartsUsed'
+
+
+
+
+try:
+    db.create_tables([SalePersons, Parts, SalesInvoices, Cars ,PartsUsed,Customers,ServiceTickets,ServiceMechanics,Services,Mechanics])
+except pw.OperationalError:
+    print('Some table already exists')
+
+nghia_sale = SalePersons(lname="Nghia", fname="ha")
+nghia_sale.save()
