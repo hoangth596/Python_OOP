@@ -52,21 +52,21 @@ class Suppliers: # thu tu tao obj 2
     """
     check = False
     __index = 0
-    def __init__(self, name, contact_name, address, city, postcode, country, phone):
+    def __init__(self, name, contact_name, address, city, postcode, country):
         if Suppliers.check == False:
             self.__supID = Suppliers.get_index('Suppliers')
         else:
             Suppliers.__index += 1
             self.__supID = Suppliers.__index
 
-        self.__validate_type(name, contact_name, address, city, postcode, country, phone)
+        self.__validate_type(name, contact_name, address, city, postcode, country)
         self.sup_name = name 
         self.sup_contact_name = contact_name
         self.sup_address = address 
         self.sup_city = city 
         self.sup_postcode = postcode 
         self.sup_country = country
-        self.sup_phone = phone
+    
 
 
     @classmethod
@@ -82,14 +82,14 @@ class Suppliers: # thu tu tao obj 2
 
     @staticmethod
     def __validate_type(name, contact_name, address,
-                        city, postal_code, country, phone):
+                        city, postal_code, country):
         assert type(name) == str
         assert type(contact_name) == str
         assert type(address) == str
         assert type(city) == str
         assert type(postal_code) == int
         assert type(country) == str
-        assert type(phone) == str
+    
 
 
     def get_id(self):
@@ -250,7 +250,6 @@ class Products: # thu tu tao obj 6
         else:
             Products.__index += 1
             self.__proID = Products.__index 
-        self.__validate_type(name, unit, price)
         self.pro_name = name 
         self.pro_unit = unit 
         self.pro_price = price 
@@ -267,13 +266,6 @@ class Products: # thu tu tao obj 6
 
         return cls.__index
         
-    @staticmethod
-    def __validate_type(name, unit, price):
-        assert type(name) == str
-
-        assert type(unit) == int
-        assert type(price) == float
-
 
     def get_id(self):
         return self.__proID
@@ -351,10 +343,10 @@ class OrderDetails: # thu tu tao obj
 
         
     def get_id(self):
-        return self.__ord_detail_ID 
-    
+        return self.__ord_detail_ID
+
 a1 = Categories('car','4 banh')
-a2 = Suppliers('AWS','USA','My','NY',10000,'Queen street','100')
+a2 = Suppliers('AWS','USA','My','NY',10000,'Queen street')
 a3 = Shippers('Shiper1','9002642')
 a4 = Employees('Mc','Donal','13-12-2000','None','Good')
 a5 = Customers('Mr','Baby','11Queen','NY',10000,'USA')
