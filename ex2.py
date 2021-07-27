@@ -138,15 +138,6 @@ class Shippers: # # thu tu tao obj 3
     def get_id(self):
         return self.__shipID
 
-    
-a1 = Categories('car','4 banh')
-a2 = Suppliers('AWS','USA','My','NY',10000,'Queen street','100')
-a3 = Shippers('Shiper1','9002642')
-a4 = Employees('Mc','Donal','13-12-2000','None','Good')
-a5 = Customers('Mr','Baby','11Queen','NY',10000,'USA')
-a6 = Products('Tesla',a1,a2,10,5000.)
-a7 = Orders(a5, a4, '10-10-2021',a3)
-a8 = OrderDetails(a7, a6, 2)
 
     def __str__(self):
         return f'Shippers : {self.get_id()},{self.ship_name},{self.ship_phone}' 
@@ -360,4 +351,13 @@ class OrderDetails: # thu tu tao obj
 
         
     def get_id(self):
-        return self.__ord_detail_ID
+        return self.__ord_detail_ID 
+    
+a1 = Categories('car','4 banh')
+a2 = Suppliers('AWS','USA','My','NY',10000,'Queen street','100')
+a3 = Shippers('Shiper1','9002642')
+a4 = Employees('Mc','Donal','13-12-2000','None','Good')
+a5 = Customers('Mr','Baby','11Queen','NY',10000,'USA')
+a6 = Products('Tesla',a1,a2,10,5000.)
+a7 = Orders(a5, a4, '10-10-2021',a3)
+a8 = OrderDetails(a7, a6, 2)
