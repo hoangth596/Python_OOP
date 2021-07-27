@@ -1,3 +1,4 @@
+
 from peewee import *
 
 
@@ -9,13 +10,14 @@ class BaseModel(Model):
         database = db
 
 
-class SalePersons(BaseModel):
-    sale_id = AutoField(primary_key=True)
-    lname = CharField()
-    fname = CharField()
+class Services(BaseModel):
+
+    service_id = AutoField(primary_key=True)
+    service_name = CharField()
+    hourly_rate = FloatField()
 
     class Meta:
-        table_name = 'SalePersons'
+        table_name = "Services"
 
 
 class Parts(BaseModel):
@@ -29,6 +31,25 @@ class Parts(BaseModel):
         table_name = 'Parts'
 
 
+class Mechanics(BaseModel):
+
+    mechanic_id = AutoField(primary_key=True)
+    last_name = CharField()
+    first_name = CharField()
+
+    class Meta:
+        table_name = "Mechanics"
+
+
+class SalePersons(BaseModel):
+    sale_id = AutoField(primary_key=True)
+    lname = CharField()
+    fname = CharField()
+
+    class Meta:
+        table_name = 'SalePersons'
+
+
 class Cars(BaseModel):
     car_id = AutoField(primary_key=True)
     car_series_number = CharField()
@@ -38,7 +59,8 @@ class Cars(BaseModel):
     avaliable = CharField()
 
     class Meta:
-        table_name = 'Cars'
+        table_name = "Cars"
+
 
 class Customers(BaseModel):
     cus_id = AutoField(primary_key=True)
@@ -65,7 +87,8 @@ class SalesInvoices(BaseModel):
     saleperson_id = ForeignKeyField(SalePersons, column_name='sale_id')
 
     class Meta:
-        table_name = 'SalesInvoices'
+        table_name = "SaleInvoices"
+
 
 class ServiceTickets(BaseModel):
     service_ticket_id = AutoField(primary_key=True)
@@ -78,40 +101,26 @@ class ServiceTickets(BaseModel):
     class Meta:
         table_name = "ServiceTickets"
 
-class Services(BaseModel):
-
-    service_id = AutoField(primary_key=True)
-    service_name = CharField()
-    hourly_rate = FloatField()
-
-    class Meta:
-        table_name = "Services"
-
-class Mechanics(BaseModel):
-
-    mechanic_id = AutoField(primary_key=True)
-    last_name = CharField()
-    first_name = CharField()
-
-    class Meta:
-        table_name = "Mechanics"
 
 class ServiceMechanics(BaseModel):
 
     service_mechanic_id = AutoField(primary_key=True)
-    service_ticket_id = ForeignKeyField(ServiceTickets, column_name='service_ticket_id')
+    service_ticket_id = ForeignKeyField(
+        ServiceTickets, column_name='service_ticket_id')
     service_id = ForeignKeyField(Services, column_name='service_id')
     mechanic_id = ForeignKeyField(Mechanics, column_name='mechanic_id')
     hour = IntegerField()
     comment = CharField()
-    rate = IntegerField()
+    rate = IntegerField
 
     class Meta:
         table_name = "ServiceMechanics"
 
+
 class PartsUsed(BaseModel):
     part_used_id = AutoField(primary_key=True)
-    service_mechanic_id = ForeignKeyField(ServiceMechanics, column_name='service_mechanic_id')
+    service_mechanic_id = ForeignKeyField(
+        ServiceMechanics, column_name='service_mechanic_id')
     part_id = ForeignKeyField(Parts, column_name='part_id')
     number_used = IntegerField()
     price = FloatField()
@@ -120,12 +129,8 @@ class PartsUsed(BaseModel):
         table_name = 'PartsUsed'
 
 
-
-
 try:
-    db.create_tables([SalePersons, Parts, SalesInvoices, Cars ,PartsUsed,Customers,ServiceTickets,ServiceMechanics,Services,Mechanics])
-except pw.OperationalError:
+    db.create_tables([SalePersons, Parts, SalesInvoices, Cars, PartsUsed,
+                      Customers, ServiceTickets, ServiceMechanics, Services, Mechanics])
+except OperationalError:
     print('Some table already exists')
-
-nghia_sale = SalePersons(lname="Nghia", fname="ha")
-nghia_sale.save()
